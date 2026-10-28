@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table
             ->foreignId('user_id')
-            ->constrained('user')
+            ->constrained('users')
             ->restrictOnDelete();
             $table->string('type',10);
             $table->string('reference_no',50)->unique();
