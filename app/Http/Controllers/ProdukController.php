@@ -14,4 +14,20 @@ class ProdukController extends Controller
         ];
         return view('produk.index', compact('produk'));
     }
+    public function create(){
+        return view('produk.create');
+    }
+
+    public function store(Request $request)
+    {
+      
+        //   return redirect()
+        // ->route('produk.index')
+        // ->with('success', 'Produk berhasil ditambahkan.');
+        $request->validate([
+    'nama'  => 'required|string|max:100',
+    'harga' => 'required|integer|min:0',
+]);
+    }
+
 }

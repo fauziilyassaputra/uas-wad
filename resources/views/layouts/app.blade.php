@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Toko</title>
+    
+    <title> @yield('title', 'Beranda') - Aplikasi saya </title>
     <style>
         body { font-family: sans-serif; margin: 0; padding: 0; }
         nav { background: #333; color: white; padding: 1rem; }
@@ -13,10 +14,7 @@
 </head>
 <body>
 
-    <nav>
-        <a href="/">Beranda</a>
-        <a href="/produk">Daftar Produk</a>
-    </nav>
+    @include('partials.navbar')
 
     <main class="container">
         @yield('content')
