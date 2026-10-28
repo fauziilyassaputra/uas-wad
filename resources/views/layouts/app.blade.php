@@ -15,7 +15,12 @@
 <body>
 
     @include('partials.navbar')
-
+    
+@if (session('success'))
+    <div style="background:#d4edda; padding:10px; margin-bottom:10px;">
+        {{ session('success') }}
+    </div>
+@endif
     <main class="container">
         @yield('content')
     </main>

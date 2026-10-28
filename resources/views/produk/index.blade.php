@@ -1,11 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Daftar Produk')
 
-@if (session('success'))
-    <div style="background:#d4edda; padding:10px; margin-bottom:10px;">
-        {{ session('success') }}
-    </div>
-@endif
 
 @section('content')
     <h1>Daftar Produk</h1>

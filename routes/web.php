@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Middleware\CatatAkses;
 use App\Http\Middleware\CekToken;
@@ -19,3 +20,7 @@ Route::get('/produk/create',[ProdukController::class, 'create'])
 ->middleware(CekToken::class)
 ;
 Route::post('/produk',[ProdukController::class, 'store'])-> name('produk.store');
+
+
+// Kategori 
+Route::resource('kategori', KategoriController::class);
