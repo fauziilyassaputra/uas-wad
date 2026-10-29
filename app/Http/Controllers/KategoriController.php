@@ -2,28 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 
 class KategoriController extends Controller
 {
-    private function dataKategori(): array
-    {
-    return [
-        ['id' => 1, 'nama' => 'Elektronik'],
-        ['id' => 2, 'nama' => 'Alat tulis'],
-        ['id' => 3, 'nama' => 'Perabot'],
-    ];
-    }
-
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $kategori = $this->dataKategori();
-        return view('kategori.index', compact('kategori'));
+       $categories = Category::withCount('products')
+            ->orderBy('name')
+            ->get();
+        return view('kategori.index', compact('categories'));
     }
 
     /**
@@ -39,43 +33,50 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nama' => 'required|string|max:100'
-        ]);
-
-        return redirect()
+       $data = $request->validate([
+         'name'        => 'required|string|max:100|unique:categories,name',
+            'description' => 'nullable|string|max:255',
+       ]);
+       Category::create($data);
+       return redirect()
         ->route('kategori.index')
-        ->with('success', 'kategori berhasil ditambahkan');
+        ->with('success', 'Kategori berhasil ditambahkan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Category $kategori)
     {
-        $kategori = collect($this->dataKategori())->firstWhere('id', (int) $id);
-        abort_if(is_null($kategori), 404);
+       $kategori->load('products');
+
         return view('kategori.show', compact('kategori'));
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Category $kategori)
     {
-        $kategori = collect($this->dataKategori())->firstWhere('id', (int) $id);
-        abort_if(is_null($kategori), 404);
+       
         return view('kategori.edit', compact('kategori'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $kategori)
     {
-        $request->validate([
-            'nama' => 'required|string|max:100'
+        $data = $request->validate([
+            'name' => [
+                'required', 'string', 'max:100',
+                Rule::unique('categories','name')->ignore($kategori->id),
+            ],
+            'description' => 'nullable|string|max:255'
         ]);
+
+        $kategori->update($data);
 
         return redirect()
             ->route('kategori.index')
@@ -86,8 +87,15 @@ class KategoriController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $kategori)
     {
+        if ($kategori->products()->exists()){
+            return redirect()
+            ->route('kategori.index')
+            ->with('error', 'Kategori tidak dapat dihapus karena masih memiliki produk.');
+        }
+
+        $kategori->delete();
         return redirect()
             ->route('kategori.index')
             ->with('success', 'kategori berhasil dihapus');

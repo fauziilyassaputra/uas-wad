@@ -11,21 +11,24 @@
 <table border="1" cellpadding="6">
     <thead>
         <tr>
-            <th>ID</th>
             <th>Nama</th>
+            <th>Deskripsi</th>
+            <th>Jumlah Produk</th>
             <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
-        @forelse ($kategori as $k )
+        @forelse ($categories as $category )
             <tr>
-                <td> {{ $k['id'] }} </td>
-                <td> {{ $k['nama'] }} </td>
+                <td> {{ $category->name }} </td>
+                <td> {{ $category->description }} </td>
+                <td> {{ $category->products_count }} </td>
+              
                 <td>
-                    <a href="{{ route('kategori.show', $k['id']) }}">Detail</a>
-                    <a href="{{ route('kategori.edit', $k['id']) }}">Ubah</a>
+                    <a href="{{ route('kategori.show', $category) }}"> Detail</a>
+                    <a href="{{ route('kategori.edit', $category) }}"> Ubah</a>
 
-                    <form action="{{ route('kategori.destroy', $k['id']) }}" method="POST" style="display: inline">
+                    <form action="{{ route('kategori.destroy', $category) }}" method="POST" style="display: inline" onsubmit="return confirm('Hapus Kategori ini?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit">Hapus</button>

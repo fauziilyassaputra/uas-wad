@@ -21,6 +21,11 @@
         {{ session('success') }}
     </div>
 @endif
+@if (session('error'))
+    <div style="background:#f8d7da; padding:10px; margin-bottom:10px;">
+        {{ session('error') }}
+    </div>
+@endif
     <main class="container">
         @yield('content')
     </main>
