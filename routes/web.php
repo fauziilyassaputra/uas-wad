@@ -13,13 +13,8 @@ Route::get('/produk',[ProdukController::class, 'index'])
 -> name('produk.index')
 ->middleware(CatatAkses::class)
 ;
-// Route::get('/produk/{id}', fn ($id) => "detail produk $id")-> name('produk.show');
-
-Route::get('/produk/create',[ProdukController::class, 'create'])
--> name('produk.create')
-->middleware(CekToken::class)
-;
-Route::post('/produk',[ProdukController::class, 'store'])-> name('produk.store');
+// Route:produk
+Route::resource('produk', ProdukController::class);
 
 
 // Kategori 

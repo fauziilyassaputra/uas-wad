@@ -21,4 +21,8 @@ class Product extends Model
     {
         return $this->hasMany(TransactionItem::class);
     }
+    public function isLowStock() : bool 
+    {
+     return $this->stock <= $this->min_stock;   
+    }
 }
