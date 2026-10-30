@@ -5,7 +5,10 @@
 @section('content')
     <h1>Daftar Produk</h1>
 
+
+    @can('manage-master')
     <a href="{{ route('produk.create') }}">Tambah Produk</a>
+    @endcan
 
     <table border="1" cellpadding="6">
         <thead>
@@ -31,15 +34,17 @@
                     </td>
                     <td>
                         <a href="{{ route('produk.show', $product) }}">Detail</a>
+                        @can('manage-master')
                         <a href="{{ route('produk.edit', $product) }}">Ubah</a>
-
-                        <form action="{{ route('produk.destroy', $product) }}"
-                              method="POST" style="display:inline"
-                              onsubmit="return confirm('Hapus produk ini?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Hapus</button>
+                        <form  form action="{{ route('produk.destroy', $product) }}"
+                        method="POST" style="display:inline"
+                        onsubmit="return confirm('Hapus produk ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Hapus</button>
                         </form>
+                        @endcan
+                       
                     </td>
                 </tr>
             @empty

@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'wise',
                 'password' => Hash::make('password'),
-                'role' => 'admin,'
+                'role' => 'admin'
             ]
         );
            User::updateOrCreate(
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'vivian',
                 'password' => Hash::make('password'),
-                'role' => 'staff,'
+                'role' => 'staff'
             ]
            );
     }
