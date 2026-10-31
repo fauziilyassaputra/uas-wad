@@ -36,7 +36,7 @@
                         <a href="{{ route('produk.show', $product) }}">Detail</a>
                         @can('manage-master')
                         <a href="{{ route('produk.edit', $product) }}">Ubah</a>
-                        <form  form action="{{ route('produk.destroy', $product) }}"
+                        <form action="{{ route('produk.destroy', $product) }}"
                         method="POST" style="display:inline"
                         onsubmit="return confirm('Hapus produk ini?')">
                         @csrf

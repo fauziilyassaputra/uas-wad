@@ -61,6 +61,8 @@ else
 
     check "GET /produk (login)" 200 "$(curl -s -k -b "$JAR" -o /dev/null -w '%{http_code}' "$BASE_URL/produk")"
     check "GET /kategori (login)" 200 "$(curl -s -k -b "$JAR" -o /dev/null -w '%{http_code}' "$BASE_URL/kategori")"
+    check "GET /produk/create (login)" 200 "$(curl -s -k -b "$JAR" -o /dev/null -w '%{http_code}' "$BASE_URL/produk/create")"
+    check "GET /kategori/create (login)" 200 "$(curl -s -k -b "$JAR" -o /dev/null -w '%{http_code}' "$BASE_URL/kategori/create")"
     check "GET /transaksi/create (login)" 200 "$(curl -s -k -b "$JAR" -o /dev/null -w '%{http_code}' "$BASE_URL/transaksi/create")"
 fi
 

@@ -5,22 +5,21 @@
 @section('content')
 <h1>Tambah Kategori</h1>
 
-<form action="{{ route("kategori.store") }}" method="POST">
+<form action="{{ route('kategori.store') }}" method="POST">
     @csrf
     <div class="">
-        <label for="name">nama</label>
-        <input type="text" id="nama" name="name" value="{{ old('name') }}">
+        <label for="name">Nama</label>
+        <input type="text" id="name" name="name" value="{{ old('name') }}">
         @error('name')
-        <small style="color: red"> {{ $message }} </small>    
+        <small style="color: red"> {{ $message }} </small>
         @enderror
     </div>
 
     <div class="">
         <label for="description">Deskripsi</label>
-        <textarea  id="nama" name="description" value="{{ old('description') }}" ></textarea>
-        @error('deskription')
-
-        <small style="color: red"> {{ $message }} </small>    
+        <textarea id="description" name="description">{{ old('description') }}</textarea>
+        @error('description')
+        <small style="color: red"> {{ $message }} </small>
         @enderror
     </div>
     <button type="submit">Simpan</button>
