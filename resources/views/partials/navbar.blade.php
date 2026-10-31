@@ -3,7 +3,7 @@
     @auth
         <a href="{{ route('produk.index') }}">Produk</a>
         <a href="{{ route('kategori.index') }}">Kategori</a>
-
+          <a href="{{ route('transaksi.index') }}">Transaksi</a>
         <span>{{ auth()->user()->name }} ({{ auth()->user()->role }})</span>
 
         <form action="{{ route('logout') }}" method="POST" style="display:inline">
@@ -15,5 +15,6 @@
     @guest
         <a href="{{ route('login') }}">Login</a>
         <a href="{{ route('register') }}">Registrasi</a>
+      
     @endguest
     </nav>

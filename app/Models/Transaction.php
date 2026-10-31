@@ -26,5 +26,8 @@ class Transaction extends Model
     {
         return $this->hasMany(TransactionItem::class);
     }
-
+public function typeLabel(): string
+{
+    return $this->type === 'in' ? 'Barang masuk' : 'Barang keluar';
+}
 }
