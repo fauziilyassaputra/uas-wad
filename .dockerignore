@@ -1,0 +1,36 @@
+# Jangan masukkan artefak lokal ke dalam image / build context
+.git
+.gitignore
+.gitattributes
+.env
+.env.*
+!.env.example
+auth.json
+
+# Dependensi & artefak build yang dipasang ulang di dalam image
+vendor
+node_modules
+/public/build
+/public/hot
+/public/storage
+/public/fonts-manifest.dev.json
+
+# Cache & log lokal (bisa membuat build gagal / bocor datanya)
+bootstrap/cache/*.php
+storage/logs/*
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/pail
+database/database.sqlite
+.phpunit.result.cache
+.phpunit.cache
+*.log
+
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+.zed
+.phpactor.json
+_ide_helper.php

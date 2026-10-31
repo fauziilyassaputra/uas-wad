@@ -1,0 +1,68 @@
+# Compose ini HANYA untuk menguji image Docker secara lokal
+# (meniru kondisi VPS: image tanpa .env, semua konfigurasi lewat env variable).
+#
+# Pakai:
+#   docker compose up -d --build
+#   sh docker/smoke-test.sh
+#   docker compose down            # tambahkan -v kalau ingin hapus data MySQL
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: uas-wad:local
+    container_name: uas-wad-app
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      APP_NAME: "UAS WAD"
+      APP_ENV: production
+      APP_DEBUG: "true"          # set false saat di VPS
+      # Kunci di bawah hanya untuk uji lokal. Di VPS WAJIB pakai APP_KEY sendiri:
+      #   php artisan key:generate --show
+      APP_KEY: "${APP_KEY:-base64:1mySaUQyYXjz9WTCvciqWG/UtHdHpadOQJolvGc4Hyg=}"
+      APP_URL: http://localhost:8080
+      LOG_CHANNEL: stderr        # biar error langsung kelihatan di docker logs
+      LOG_LEVEL: debug
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: uas_wad
+      DB_USERNAME: laravel
+      DB_PASSWORD: secret
+      SESSION_DRIVER: database
+      CACHE_STORE: database
+      QUEUE_CONNECTION: database
+      RUN_MIGRATIONS: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'php -r "exit(@fsockopen(\"127.0.0.1\", (int)getenv(\"PORT\")) ? 0 : 1);"'
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  db:
+    image: mysql:8.4
+    container_name: uas-wad-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootsecret
+      MYSQL_DATABASE: uas_wad
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h127.0.0.1", "-uroot", "-prootsecret"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+volumes:
+  db-data:
