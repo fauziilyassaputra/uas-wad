@@ -3,17 +3,26 @@
 @section('title', 'Detail Kategori')
 
 @section('content')
-<h1> {{ $kategori->name }} </h1>
-<h1>ID: {{ $kategori->description ?: 'tidak ada deskripsi.' }} </h1>
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">{{ $kategori->name }}</h1>
+            <p class="page-subtitle">{{ $kategori->description ?: 'Tidak ada deskripsi.' }}</p>
+        </div>
+    </div>
 
-<h2>Produk dalam kategori ini</h2>
-<ul>
-    @forelse ($kategori->products as $product )
-        <li> {{ $product->name }} (stok: {{ $product->stock }} {{ $product->unit }}) </li>
-    @empty
-         <li><em>Belum ada produk.</em></li>
-    @endforelse
-</ul>
+    <h2 class="section-title">Produk dalam kategori ini</h2>
+    <ul class="item-list">
+        @forelse ($kategori->products as $product)
+            <li>
+                <span class="item-name">{{ $product->name }}</span>
+                <span class="text-muted">Stok: {{ $product->stock }} {{ $product->unit }}</span>
+            </li>
+        @empty
+            <li class="table-empty">Belum ada produk.</li>
+        @endforelse
+    </ul>
 
-<a href="{{ route('kategori.index') }}">Kembali</a>
+    <div class="back-link">
+        <a href="{{ route('kategori.index') }}" class="btn btn--secondary"><span>Kembali</span></a>
+    </div>
 @endsection

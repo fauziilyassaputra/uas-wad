@@ -3,31 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title> @yield('title', 'Beranda') - Aplikasi saya </title>
-    <style>
-        body { font-family: sans-serif; margin: 0; padding: 0; }
-        nav { background: #333; color: white; padding: 1rem; }
-        nav a { color: white; text-decoration: none; margin-right: 15px; }
-        .container { padding: 20px; }
-    </style>
+    <title>@yield('title', 'Beranda') - Random Play </title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
 
     @include('partials.navbar')
-    
-@if (session('success'))
-    <div style="background:#d4edda; padding:10px; margin-bottom:10px;">
-        {{ session('success') }}
-    </div>
-@endif
-@if (session('error'))
-    <div style="background:#f8d7da; padding:10px; margin-bottom:10px;">
-        {{ session('error') }}
-    </div>
-@endif
-    <main class="container">
-        @yield('content')
+
+    <main class="page">
+        @if (session('success'))
+            <div class="alert alert--success" role="status">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert--error" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <div class="panel">
+            @yield('content')
+        </div>
     </main>
 
 </body>

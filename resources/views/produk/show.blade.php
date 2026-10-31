@@ -3,18 +3,35 @@
 @section('title', 'Detail Produk')
 
 @section('content')
-    <h1>{{ $produk->name }}</h1>
+    <div class="page-header">
+        <div class="detail-title">
+            <h1 class="page-title">{{ $produk->name }}</h1>
+            @if ($produk->isLowStock())
+                <span class="badge badge--danger"><span>Stok menipis</span></span>
+            @endif
+        </div>
+    </div>
 
-    <ul>
-        <li>SKU: {{ $produk->sku }}</li>
-        <li>Kategori: {{ $produk->category->name }}</li>
-        <li>Stok: {{ $produk->stock }} {{ $produk->unit }}</li>
-        <li>Batas minimum: {{ $produk->min_stock }}</li>
-    </ul>
+    <dl class="detail-grid">
+        <div class="detail-item">
+            <dt>SKU</dt>
+            <dd>{{ $produk->sku }}</dd>
+        </div>
+        <div class="detail-item">
+            <dt>Kategori</dt>
+            <dd>{{ $produk->category->name }}</dd>
+        </div>
+        <div class="detail-item">
+            <dt>Stok</dt>
+            <dd>{{ $produk->stock }} {{ $produk->unit }}</dd>
+        </div>
+        <div class="detail-item">
+            <dt>Batas minimum</dt>
+            <dd>{{ $produk->min_stock }}</dd>
+        </div>
+    </dl>
 
-    @if ($produk->isLowStock())
-        <p style="color:red">Stok produk ini sudah menipis.</p>
-    @endif
-
-    <a href="{{ route('produk.index') }}">Kembali</a>
+    <div class="back-link">
+        <a href="{{ route('produk.index') }}" class="btn btn--secondary"><span>Kembali</span></a>
+    </div>
 @endsection
