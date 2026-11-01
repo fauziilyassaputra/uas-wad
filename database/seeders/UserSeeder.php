@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             ['email' => 'vivian@randomplay.id'],
             [
                 'name' => 'vivian staff',
-                'password' => Hash::make($this->password('SEED_ADMIN_PASSWORD')),
+                'password' => Hash::make($this->password('SEED_STAFF_PASSWORD')),
                 'role' => 'staff'
             ]
            );
